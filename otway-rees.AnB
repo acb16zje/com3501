@@ -1,0 +1,20 @@
+Protocol:OTWAY
+Types:
+  Agent A, B, s;
+  Number NA, NB, M;
+  Symmetric_key K;
+  Function sk;
+
+Knowledge:
+  A: A, B, s, sk(A,s), inv(sk(A,s));
+  B: B, s, sk(B,s), inv(sk(B,s));
+  s: A, B, sk(B,s), inv(sk(B,s)), sk(A,s), inv(sk(A,s));
+
+Actions:
+  A -> B: M, A, B, {|NA,M,A,B|}sk(A,s)
+  B -> s: M, A, B, {|NA,M,A,B|}sk(A,s), {|NB,M,A,B|}sk(B,s)
+  s -> B: M, {|NA,K|}sk(A,s), {|NB,K|}sk(B,s)
+  B -> A: M, {|NA,K|}sk(A,s)
+
+Goals:
+  A ->* B: K

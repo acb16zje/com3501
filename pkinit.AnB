@@ -1,0 +1,16 @@
+Protocol: PKINIT
+Types:
+  Agent C,KAS,s;
+  Number TC,N2;
+  Symmetric_key K;
+  Function pk,sigk;
+Knowledge:
+  C:   C, KAS, s, sigk(s), pk(s), {C,pk(C),sigk(C)}inv(sigk(s)),
+       sigk(C), pk(C), inv(sigk(C)), inv(pk(C));
+  KAS: KAS, s, sigk(s), pk(s), {KAS,pk(KAS),sigk(KAS)}inv(sigk(s)),
+       sigk(KAS), pk(KAS), inv(sigk(KAS)), inv(pk(KAS));
+Actions:
+  C -> KAS: {C,pk(C),sigk(C)}inv(sigk(s)),{TC,N2}inv(sigk(C))
+  KAS -> C: {{KAS,pk(KAS),sigk(KAS)}inv(sigk(s)), {K,N2,C}inv(sigk(KAS))}pk(C)
+Goals:
+  KAS *->* C: K
